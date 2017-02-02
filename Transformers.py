@@ -23,11 +23,12 @@ Bcamp = []
 # reading the channels
 def DocumentRead():
     for n,line in enumerate(data, 1):
-    #    print ('{:2}.'.format(n), line.rstrip())
         parts = line.split(',')
-        time.append(parts[:1])
-        current.append(parts[1:2])
-        voltage.append(parts[2:3])
+
+        # Access the string item, get the first element and append to an array
+        time.append(parts[:1][0])
+        current.append(float(parts[1:2][0]) * Hcte)
+        voltage.append(float(parts[2:3][0]) * Bcte)
 
 def Plotcurrentvoltage():
     plt.plot(time,current, label='Current')
