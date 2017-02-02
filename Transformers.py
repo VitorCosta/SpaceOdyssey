@@ -29,6 +29,16 @@ def DocumentRead():
         current.append(parts[1:2])
         voltage.append(parts[2:3])
 
+def Plotcurrentvoltage():
+    plt.plot(time,current, label='Current')
+    plt.plot(time,voltage, label='Voltage')
+    plt.xlabel('Time')
+    plt.ylabel('Amplitude')
+    plt.title('Timex.current.voltage')
+    plt.grid()
+    plt.legend()
+    plt.show()
+
 
 #opening the data files
 with open(filename) as f:
@@ -37,7 +47,7 @@ with open(filename) as f:
 #main Program
 
 DocumentRead()
-
+Plotcurrentvoltage()
 
 Hcamp= np.array(current)
 Bcamp = np.array(voltage)
@@ -46,5 +56,5 @@ print(Hcamp)
 print(type(Hcamp))
 
 # printing the graphics
-plt.plot(Hcamp,Bcamp)
-plt.show()
+#plt.plot(Hcamp,Bcamp)
+#plt.show()
