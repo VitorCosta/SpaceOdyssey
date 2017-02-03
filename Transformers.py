@@ -25,6 +25,7 @@ Bcte = 0.501564416
 # reading the channels and access the string item, get the first element and append to an array
 def DocumentRead():
     for n,line in enumerate(data, 1):
+<<<<<<< HEAD
         #print ('{:2}.'.format(n), line.rstrip())
         parts = line.split(',')
         time.append(parts[:1][0])
@@ -32,6 +33,14 @@ def DocumentRead():
         voltage.append(float(parts[2:3][0]))
         Hcamp.append(float(parts[1:2][0]) * Hcte)
         Bcamp.append(float(parts[2:3][0]) * Bcte)
+=======
+        parts = line.split(',')
+
+        # Access the string item, get the first element and append to an array
+        time.append(parts[:1][0])
+        current.append(float(parts[1:2][0]) * Hcte)
+        voltage.append(float(parts[2:3][0]) * Bcte)
+>>>>>>> 37ea2ce9f43e90d3db0764be141bf66a8b1bedbe
 
 
 #plot the read current and voltage
