@@ -32,7 +32,6 @@ def DocumentRead():
         voltage.append(float(parts[2:3][0]))
         Hcamp.append(float(parts[1:2][0]) * Hcte)
         Bcamp.append(float(parts[2:3][0]) * Bcte)
-        parts = line.split(',')
 
 
 #plot the read current and voltage
@@ -44,6 +43,7 @@ def PlotCurrentVoltage():
     plt.title('Timex.current.voltage')
     plt.grid()
     plt.legend()
+    plt.show()
 
 #Plot the potency graphic
 def PlotPotency():
@@ -54,6 +54,7 @@ def PlotPotency():
     plt.title('PotxTime')
     Med = float(sum(Pot)/len(Pot))
     Rms = float(sqrt(mean(square(Pot))))
+    plt.show()
     print(Med)
     print(Rms)
 
@@ -64,6 +65,7 @@ def PlotCamps():
     plt.xlabel('A/M')
     plt.ylabel('Tesla')
     plt.title('HxB')
+    plt.show()
 
 #opening the data files
 with open(filename) as f:
