@@ -77,7 +77,6 @@ def Fft():
     L = len(sample)
     print(L)
     Y = scipy.fftpack.fft(sample)/L
-    u = L/2
     #print(Y)
     xdft = Y[0:251]
     print(len(xdft))
@@ -86,6 +85,7 @@ def Fft():
     ampl_fft = 2 * np.absolute(xdft)
     #print (ampl_fft)
     plt.bar(freq,ampl_fft)
+    plt.axis([0,50,0,1.5])
     plt.grid()
     plt.show()
 
@@ -99,6 +99,6 @@ with open(filename) as f:
 
 DocumentRead()
 Fft()
-#PlotCurrentVoltage()
-#PlotPotency()
-#PlotCamps()
+PlotCurrentVoltage()
+PlotPotency()
+PlotCamps()
