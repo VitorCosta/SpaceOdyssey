@@ -4,7 +4,9 @@
 #importing the matemathical library
 import math
 import matplotlib.pyplot as plt
-from numpy import mean, sqrt, square, arange
+from numpy import mean, sqrt, square, arange, size
+import numpy as np
+import scipy.fftpack
 
 
 # Write the name of the file5
@@ -20,6 +22,7 @@ Bcamp = []
 Pot = []
 Hcte = 355.8676647
 Bcte = 0.501564416
+fourrier = []
 
 
 # reading the channels and access the string item, get the first element and append to an array
@@ -52,11 +55,12 @@ def PlotPotency():
     plt.xlabel('time')
     plt.ylabel('Amplitude[W]')
     plt.title('PotxTime')
+    plt.grid()
     Med = float(sum(Pot)/len(Pot))
     Rms = float(sqrt(mean(square(Pot))))
     plt.show()
-    print(Med)
-    print(Rms)
+    print("Med Value:  " , Med)
+    print("Rms Value:  " , Rms)
 
 
 #Plot the magnetization curve
@@ -65,15 +69,36 @@ def PlotCamps():
     plt.xlabel('A/M')
     plt.ylabel('Tesla')
     plt.title('HxB')
+    plt.grid()
     plt.show()
+
+def Fft():
+    sample = current
+    L = len(sample)
+    print(L)
+    Y = scipy.fftpack.fft(sample)/L
+    u = L/2
+    #print(Y)
+    xdft = Y[0:251]
+    print(len(xdft))
+    freq = np.linspace(0,L/2+1,L/2+1)
+    print(len(freq))
+    ampl_fft = 2 * np.absolute(xdft)
+    #print (ampl_fft)
+    plt.bar(freq,ampl_fft)
+    plt.grid()
+    plt.show()
+
+
+
+#main Program
 
 #opening the data files
 with open(filename) as f:
     data = f.readlines()
 
-#main Program
-
 DocumentRead()
-PlotCurrentVoltage()
-PlotPotency()
-PlotCamps()
+Fft()
+#PlotCurrentVoltage()
+#PlotPotency()
+#PlotCamps()
