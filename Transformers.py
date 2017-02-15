@@ -38,17 +38,17 @@ def PlotCurrentVoltage():
     axes.set_title('Time versus Current and Voltage')
     axes.set_xlabel('Amplitude')
     axes.set_ylabel('Time')
-    axes.grid(color='black',ls='-',lw=0.5)
+    axes.grid(color='b', alpha=0.5, linestyle='dashed', linewidth=0.5)
     axes.legend(loc=(1.01,1.01))
     CurrentRms = np.sqrt(np.mean(np.square(current)))
-    VoltageRms = np.sqrt(np.mean(np.square(voltage))
+    VoltageRms = np.sqrt(np.mean(np.square(voltage)))
     print('The Rms Current is: {}'.format(CurrentRms))
     print('The Rms Voltage is: {}'.format(VoltageRms))
     plt.show(GraphCV)
 
 #lot the potency graphic
 def PlotPotency():
-    Pot = [current*voltage for current,voltage in zip(current,voltage)]
+    Pot = voltage * current
     plt.plot(time,Pot)
     plt.xlabel('time')
     plt.ylabel('Amplitude[W]')
@@ -60,6 +60,7 @@ def PlotPotency():
     print('The Rms Value is: {}'.format(Rms))
     plt.show()
 
+
 #Plot the magnetization curve
 def PlotCamps():
     plt.plot(Hcamp,Bcamp)
@@ -68,6 +69,11 @@ def PlotCamps():
     plt.title('HxB')
     plt.grid()
     plt.show()
+    Energy = np.trapz(Bcamp,Hcamp,dx=0.01,axis=0)
+    print('The Energy Value is: {}'.format(abs(Energy)))
+    vol=0.000142738;
+    Pfe = abs(Energy) * vol * 60
+    print('The Potency Value is: {}'.format(abs(Pfe)))
 
 def Fft():
     sample = current
@@ -75,9 +81,9 @@ def Fft():
     print(L)
     Y = scipy.fftpack.fft(sample)/L
     #print(Y)
-    xdft = Y[0:251]
+    xdft = Y[0:L/2+1]
     print(len(xdft))
-    freq = np.linspace(0,L/2+1,L/2+1)
+    freq = np.linspace(0,L/2,L/2+1)
     print(len(freq))
     ampl_fft = 2 * np.absolute(xdft)
     #print (ampl_fft)
@@ -85,6 +91,7 @@ def Fft():
     plt.axis([0,50,0,1.5])
     plt.grid()
     plt.show()
+    print(freq)
 
 
 
