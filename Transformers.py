@@ -41,7 +41,9 @@ def PlotCurrentVoltage():
     axes.grid(color='black',ls='-',lw=0.5)
     axes.legend(loc=(1.01,1.01))
     CurrentRms = np.sqrt(np.mean(np.square(current)))
+    VoltageRms = np.sqrt(np.mean(np.square(voltage))
     print('The Rms Current is: {}'.format(CurrentRms))
+    print('The Rms Voltage is: {}'.format(VoltageRms))
     plt.show(GraphCV)
 
 #lot the potency graphic
@@ -52,12 +54,11 @@ def PlotPotency():
     plt.ylabel('Amplitude[W]')
     plt.title('PotxTime')
     plt.grid()
-    Med = float(sum(Pot)/len(Pot))
-    Rms = float(sqrt(mean(square(Pot))))
+    Med = float(np.sum(Pot)/len(Pot))
+    Rms = float(np.sqrt(np.mean(np.square(Pot))))
+    print('The Med Value is: {}'.format(Med))
+    print('The Rms Value is: {}'.format(Rms))
     plt.show()
-    print("Med Value:  " , Med)
-    print("Rms Value:  " , Rms)
-
 
 #Plot the magnetization curve
 def PlotCamps():
