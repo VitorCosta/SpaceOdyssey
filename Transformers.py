@@ -4,14 +4,9 @@
 #importing the matemathical library
 import math
 import matplotlib.pyplot as plt
-from numpy import mean, sqrt, square, arange, size
 import numpy as np
 import scipy.fftpack
-
-
-# Write the name of the file5
-filename = 'file-800.txt'
-
+import pandas as pd
 
 
 time = []
@@ -26,29 +21,30 @@ fourrier = []
 
 
 # reading the channels and access the string item, get the first element and append to an array
-def DocumentRead():
-    for n,line in enumerate(data, 1):
-        #print ('{:2}.'.format(n), line.rstrip())
-        parts = line.split(',')
-        time.append(parts[:1][0])
-        current.append(float(parts[1:2][0]))
-        voltage.append(float(parts[2:3][0]))
-        Hcamp.append(float(parts[1:2][0]) * Hcte)
-        Bcamp.append(float(parts[2:3][0]) * Bcte)
+def DocumentRead(x):
+    data = pd.read_csv(x)
+    return data
+
+
+
 
 
 #plot the read current and voltage
 def PlotCurrentVoltage():
-    plt.plot(time,current, label='Current')
-    plt.plot(time,voltage, label='Voltage')
-    plt.xlabel('Time')
-    plt.ylabel('Amplitude')
-    plt.title('Timex.current.voltage')
-    plt.grid()
-    plt.legend()
-    plt.show()
+    GraphCV = plt.figure()
+    axes = GraphCV.add_axes([0.1,0.1,0.8,0.8])
+    axes.plot(time,current,color = 'red',label='Current')
+    axes.plot(time,voltage,color = 'black',label='Voltage')
+    axes.set_title('Time versus Current and Voltage')
+    axes.set_xlabel('Amplitude')
+    axes.set_ylabel('Time')
+    axes.grid(color='black',ls='-',lw=0.5)
+    axes.legend(loc=(1.01,1.01))
+    CurrentRms = np.sqrt(np.mean(np.square(current)))
+    print('The Rms Current is: {}'.format(CurrentRms))
+    plt.show(GraphCV)
 
-#Plot the potency graphic
+#lot the potency graphic
 def PlotPotency():
     Pot = [current*voltage for current,voltage in zip(current,voltage)]
     plt.plot(time,Pot)
@@ -93,12 +89,16 @@ def Fft():
 
 #main Program
 
-#opening the data files
-with open(filename) as f:
-    data = f.readlines()
 
-DocumentRead()
-Fft()
+df = DocumentRead('60Hz800.csv')
+
+time = df['TIME']
+current = df['CH1']
+voltage = df['CH2']
+Hcamp = df['CH1'] * Hcte
+Bcamp = df['CH2'] * Bcte
+
+#Fft()
 PlotCurrentVoltage()
 PlotPotency()
 PlotCamps()
